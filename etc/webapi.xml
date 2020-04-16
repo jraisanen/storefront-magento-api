@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/sf/brands" method="GET">
+        <service class="Jraisanen\Storefront\Api\BrandInterface" method="brands" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/sf/categories" method="GET">
+        <service class="Jraisanen\Storefront\Api\CategoryInterface" method="categories" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/sf/products" method="GET">
+        <service class="Jraisanen\Storefront\Api\ProductInterface" method="products" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/products/:key" method="GET">
+        <service class="Jraisanen\Storefront\Api\ProductInterface" method="product" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/sf/data/brands" method="POST">
+        <service class="Jraisanen\Storefront\Api\DataInterface" method="brands" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/data/categories" method="POST">
+        <service class="Jraisanen\Storefront\Api\DataInterface" method="categories" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/data/categories/images" method="POST">
+        <service class="Jraisanen\Storefront\Api\DataInterface" method="categoriesImages" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/data/products" method="POST">
+        <service class="Jraisanen\Storefront\Api\DataInterface" method="products" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/data/products/brands" method="POST">
+        <service class="Jraisanen\Storefront\Api\DataInterface" method="productsBrands" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+</routes>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!--<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Jraisanen\Storefront\Api\CategoryInterface" type="Jraisanen\Storefront\Plugin\CategoryRepositoryPlugin" />
+</config>-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Jraisanen\Storefront\Api\CategoryInterface" type="Jraisanen\Storefront\Model\Category" />
+    <preference for="Jraisanen\Storefront\Api\BrandInterface" type="Jraisanen\Storefront\Model\Brand" />
+    <preference for="Jraisanen\Storefront\Api\DataInterface" type="Jraisanen\Storefront\Model\Data" />
+    <preference for="Jraisanen\Storefront\Api\ProductInterface" type="Jraisanen\Storefront\Model\Product" />
+    <type name="Magento\Quote\Api\CartRepositoryInterface">
+        <plugin name="add_more_info" type="Jraisanen\Storefront\Plugin\QuotePlugin" sortOrder="10" />
+    </type>
+</config>
