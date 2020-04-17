@@ -1,26 +1,29 @@
 <?php
-
 namespace Jraisanen\Storefront\Model;
 
+use Magento\Eav\Model\Config;
+use Magento\Framework\App\Request\Http;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Webapi\Exception;
 use Jraisanen\Storefront\Api\BrandInterface;
 
 class Brand implements BrandInterface
 {
     private $_eavConfig;
+    private $_httpRequest;
     private $_productCollection;
-    private $_request;
     private $_storeManager;
 
     public function __construct(
-        \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollection,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        Config $eavConfig,
+        Http $httpRequest,
+        CollectionFactory $productCollection,
+        StoreManagerInterface $storeManager
     ) {
         $this->_eavConfig = $eavConfig;
+        $this->_httpRequest = $httpRequest;
         $this->_productCollection = $productCollection;
-        $this->_request = $request;
         $this->_storeManager = $storeManager;
     }
 
@@ -29,25 +32,25 @@ class Brand implements BrandInterface
      *
      * @api
      * @throws string
-     * @return string[]
+     * @return array
      */
     public function brands() {
         $data = [];
 
         try {
-            $attributeDetails = $this->_eavConfig->getAttribute('catalog_product', 'manufacturer');
-            $options = $attributeDetails->getSource()->getAllOptions();
+            $attribute = $this->_eavConfig->getAttribute('catalog_product', 'manufacturer');
 
-            foreach ($options as $option) {
-                $products = $this->_productCollection->create()
-                    ->addAttributeToFilter('manufacturer', $option['value'])
-                    ->setStore($this->_storeManager->getStore());
-
-                if ($this->_request->getParam('category')) {
-                    $products = $products->addCategoriesFilter(['in' => $this->_request->getParam('category')]);
-                }
-
+            foreach ($attribute->getSource()->getAllOptions() as $option) {
                 if ((int)$option['value'] > 0) {
+                    $products = $this->_productCollection->create()
+                        ->addAttributeToFilter('manufacturer', $option['value'])
+                        ->setStore($this->_storeManager->getStore());
+
+                    if ($this->_httpRequest->getParam('category')) {
+                        $filters = ['in' => $this->_httpRequest->getParam('category')];
+                        $products = $products->addCategoriesFilter($filters);
+                    }
+
                     $data[] = [
                         'id' => (int)$option['value'],
                         'name' => $option['label'],

@@ -1,66 +1,32 @@
 <?php
-
 namespace Jraisanen\Storefront\Plugin;
 
-use Magento\Quote\Api\Data\CartInterface;
+use Magento\Quote\Api\Data\CartItemExtensionFactory;
+use Magento\Catalog\Api\ProductRepositoryInterfaceFactory;
 
-class QuotePlugin {
-
-    /**
-     * @var \Magento\Quote\Api\Data\CartItemExtensionFactory
-     */
+class QuotePlugin
+{
     protected $cartItemExtension;
-
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
-     */
     protected $productRepository;
 
-    /**
-     * @param \Magento\Quote\Api\Data\CartItemExtensionFactory $cartItemExtension
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
-     */
     public function __construct(
-        \Magento\Quote\Api\Data\CartItemExtensionFactory $cartItemExtension,
-        \Magento\Catalog\Api\ProductRepositoryInterfaceFactory $productRepository) {
+        CartItemExtensionFactory $cartItemExtension,
+        ProductRepositoryInterfaceFactory $productRepository
+    ) {
         $this->cartItemExtension = $cartItemExtension;
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * Add attribute values
-     *
-     * @param   \Magento\Quote\Api\CartRepositoryInterface $subject,
-     * @param   $quote
-     * @return  $quoteData
-     */
-    public function afterGet(
-        \Magento\Quote\Api\CartRepositoryInterface $subject, $quote
-    ) {
+    public function afterGet($subject, $quote) {
         $quoteData = $this->setAttributeValue($quote);
         return $quoteData;
     }
 
-    /**
-     * Add attribute values
-     *
-     * @param   \Magento\Quote\Api\CartRepositoryInterface $subject,
-     * @param   $quote
-     * @return  $quoteData
-     */
-    public function afterGetActiveForCustomer(
-        \Magento\Quote\Api\CartRepositoryInterface $subject, $quote
-    ) {
+    public function afterGetActiveForCustomer($subject, $quote) {
         $quoteData = $this->setAttributeValue($quote);
         return $quoteData;
     }
 
-    /**
-     * set value of attributes
-     *
-     * @param   $product,
-     * @return  $extensionAttributes
-     */
     private function setAttributeValue($quote) {
         if ($quote->getItemsCount()) {
             foreach ($quote->getItems() as $item) {
@@ -83,5 +49,4 @@ class QuotePlugin {
 
         return $quote;
     }
-
 }

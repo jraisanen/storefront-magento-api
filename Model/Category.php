@@ -1,7 +1,9 @@
 <?php
-
 namespace Jraisanen\Storefront\Model;
 
+use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Webapi\Exception;
 use Jraisanen\Storefront\Api\CategoryInterface;
 
@@ -12,9 +14,9 @@ class Category implements CategoryInterface
     private $_storeManager;
 
     public function __construct(
-        \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollection,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollection,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        CategoryCollectionFactory $categoryCollection,
+        ProductCollectionFactory $productCollection,
+        StoreManagerInterface $storeManager
     ) {
         $this->_categoryCollection = $categoryCollection;
         $this->_productCollection = $productCollection;

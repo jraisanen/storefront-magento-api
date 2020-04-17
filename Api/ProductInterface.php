@@ -1,14 +1,18 @@
 <?php
-
 namespace Jraisanen\Storefront\Api;
+
+use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Magento\Framework\App\Request\Http;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 interface ProductInterface
 {
     public function __construct(
-        \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollection,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollection,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        CategoryCollectionFactory $categoryCollection,
+        Http $httpRequest,
+        ProductCollectionFactory $productCollection,
+        StoreManagerInterface $storeManager
     );
 
     /**

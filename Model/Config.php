@@ -1,7 +1,8 @@
 <?php
-
 namespace Jraisanen\Storefront\Model;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Webapi\Exception;
 use Jraisanen\Storefront\Api\ConfigInterface;
 
@@ -11,8 +12,8 @@ class Config implements ConfigInterface
     private $_storeManager;
 
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManager
     ) {
         $this->_scopeConfig = $scopeConfig;
         $this->_storeManager = $storeManager;
@@ -23,7 +24,7 @@ class Config implements ConfigInterface
      *
      * @api
      * @throws string
-     * @return string[]
+     * @return array
      */
     public function configs() {
         $data = [];

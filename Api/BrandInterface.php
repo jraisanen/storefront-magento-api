@@ -1,21 +1,25 @@
 <?php
-
 namespace Jraisanen\Storefront\Api;
+
+use Magento\Eav\Model\Config;
+use Magento\Framework\App\Request\Http;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 interface BrandInterface
 {
     public function __construct(
-        \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollection,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        Config $eavConfig,
+        Http $httpRequest,
+        CollectionFactory $productCollection,
+        StoreManagerInterface $storeManager
     );
 
     /**
      * Brands
      *
      * @api
-     * @return string[]
+     * @return array
      */
     public function brands();
 }

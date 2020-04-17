@@ -1,25 +1,28 @@
 <?php
-
 namespace Jraisanen\Storefront\Model;
 
+use Magento\Framework\App\Request\Http;
+use Magento\Cms\Api\PageRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Webapi\Exception;
 use Jraisanen\Storefront\Api\PageInterface;
 
 class Page implements PageInterface
 {
+    private $_httpRequest;
     private $_pageRepository;
-    private $_request;
     private $_searchCriteria;
     private $_storeManager;
 
     public function __construct(
-        \Magento\Cms\Api\PageRepositoryInterface $pageRepository,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteria,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        Http $httpRequest,
+        PageRepositoryInterface $pageRepository,
+        SearchCriteriaBuilder $searchCriteria,
+        StoreManagerInterface $storeManager
     ) {
+        $this->_httpRequest = $httpRequest;
         $this->_pageRepository = $pageRepository;
-        $this->_request = $request;
         $this->_searchCriteria = $searchCriteria;
         $this->_storeManager = $storeManager;
     }
@@ -34,24 +37,24 @@ class Page implements PageInterface
     public function pages() {
         try {
             // Exclude page
-            if ($this->_request->getParam('exclude')) {
-                $this->_searchCriteria->addFilter('page_id', ['neq' => $this->_request->getParam('exclude')]);
+            if ($this->_httpRequest->getParam('exclude')) {
+                $this->_searchCriteria->addFilter('page_id', ['neq' => $this->_httpRequest->getParam('exclude')]);
             }
 
             // Current page
-            if ($this->_request->getParam('page')) {
-                $this->_searchCriteria->setCurrentPage($this->_request->getParam('page'));
+            if ($this->_httpRequest->getParam('page')) {
+                $this->_searchCriteria->setCurrentPage($this->_httpRequest->getParam('page'));
             }
 
             // Number of items per page
-            if ($this->_request->getParam('limit')) {
-                $this->_searchCriteria->setPageSize($this->_request->getParam('limit'));
+            if ($this->_httpRequest->getParam('limit')) {
+                $this->_searchCriteria->setPageSize($this->_httpRequest->getParam('limit'));
             }
 
             // Sort by an attribute
-            if ($this->_request->getParam('sortBy') && $this->_request->getParam('sortOrder')) {
+            if ($this->_httpRequest->getParam('sortBy') && $this->_httpRequest->getParam('sortOrder')) {
                 $this->_searchCriteria->setSortOrders([
-                    strtoupper($this->_request->getParam('sortBy')) => strtoupper($this->_request->getParam('sortOrder'))
+                    strtoupper($this->_httpRequest->getParam('sortBy')) => strtoupper($this->_httpRequest->getParam('sortOrder'))
                 ]);
             }
 

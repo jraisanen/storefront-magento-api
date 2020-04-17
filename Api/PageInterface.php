@@ -1,14 +1,18 @@
 <?php
-
 namespace Jraisanen\Storefront\Api;
+
+use Magento\Framework\App\Request\Http;
+use Magento\Cms\Api\PageRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Store\Model\StoreManagerInterface;
 
 interface PageInterface
 {
     public function __construct(
-        \Magento\Cms\Api\PageRepositoryInterface $pageRepository,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteria,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        Http $httpRequest,
+        PageRepositoryInterface $pageRepository,
+        SearchCriteriaBuilder $searchCriteria,
+        StoreManagerInterface $storeManager
     );
 
     /**

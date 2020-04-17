@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
     <route url="/V1/sf/brands" method="GET">
         <service class="Jraisanen\Storefront\Api\BrandInterface" method="brands" />
@@ -7,21 +6,18 @@
             <resource ref="anonymous" />
         </resources>
     </route>
-
     <route url="/V1/sf/categories" method="GET">
         <service class="Jraisanen\Storefront\Api\CategoryInterface" method="categories" />
         <resources>
             <resource ref="anonymous" />
         </resources>
     </route>
-
     <route url="/V1/sf/configs" method="GET">
         <service class="Jraisanen\Storefront\Api\ConfigInterface" method="configs" />
         <resources>
             <resource ref="anonymous" />
         </resources>
     </route>
-
     <route url="/V1/sf/products" method="GET">
         <service class="Jraisanen\Storefront\Api\ProductInterface" method="products" />
         <resources>
@@ -34,7 +30,6 @@
             <resource ref="anonymous" />
         </resources>
     </route>
-
     <route url="/V1/sf/pages" method="GET">
         <service class="Jraisanen\Storefront\Api\PageInterface" method="pages" />
         <resources>
