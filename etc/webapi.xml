@@ -15,6 +15,13 @@
         </resources>
     </route>
 
+    <route url="/V1/sf/configs" method="GET">
+        <service class="Jraisanen\Storefront\Api\ConfigInterface" method="configs" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
     <route url="/V1/sf/products" method="GET">
         <service class="Jraisanen\Storefront\Api\ProductInterface" method="products" />
         <resources>
