@@ -35,6 +35,19 @@
         </resources>
     </route>
 
+    <route url="/V1/sf/pages" method="GET">
+        <service class="Jraisanen\Storefront\Api\PageInterface" method="pages" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/pages/:key" method="GET">
+        <service class="Jraisanen\Storefront\Api\PageInterface" method="page" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
     <route url="/V1/sf/data/brands" method="POST">
         <service class="Jraisanen\Storefront\Api\DataInterface" method="brands" />
         <resources>
