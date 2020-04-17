@@ -47,35 +47,4 @@
             <resource ref="anonymous" />
         </resources>
     </route>
-
-    <route url="/V1/sf/data/brands" method="POST">
-        <service class="Jraisanen\Storefront\Api\DataInterface" method="brands" />
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
-    <route url="/V1/sf/data/categories" method="POST">
-        <service class="Jraisanen\Storefront\Api\DataInterface" method="categories" />
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
-    <route url="/V1/sf/data/categories/images" method="POST">
-        <service class="Jraisanen\Storefront\Api\DataInterface" method="categoriesImages" />
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
-    <route url="/V1/sf/data/products" method="POST">
-        <service class="Jraisanen\Storefront\Api\DataInterface" method="products" />
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
-    <route url="/V1/sf/data/products/brands" method="POST">
-        <service class="Jraisanen\Storefront\Api\DataInterface" method="productsBrands" />
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
 </routes>

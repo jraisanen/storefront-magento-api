@@ -1,1 +1,1 @@
-# Storefront Magento
+# Magento Storefront
