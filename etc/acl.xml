@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Jraisanen_Storefront::storefront" title="Storefront">
+                    <resource id="Jraisanen_Storefront::brands" title="Brands" sortOrder="10" />
+                    <resource id="Jraisanen_Storefront::categories" title="Categories" sortOrder="20" />
+                    <resource id="Jraisanen_Storefront::configs" title="Configs" sortOrder="30" />
+                    <resource id="Jraisanen_Storefront::products" title="Products" sortOrder="40" />
+                    <resource id="Jraisanen_Storefront::product" title="Product" sortOrder="50" />
+                    <resource id="Jraisanen_Storefront::pages" title="Pages" sortOrder="60" />
+                    <resource id="Jraisanen_Storefront::page" title="Page" sortOrder="70" />
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
