@@ -4,8 +4,8 @@ namespace Jraisanen\Storefront\Model;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Magento\Framework\App\Request\Http;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\Webapi\Exception;
 use Jraisanen\Storefront\Api\ProductInterface;
 
 class Product implements ProductInterface
@@ -34,46 +34,43 @@ class Product implements ProductInterface
      * @throws string
      * @return array
      */
-    public function products() {
-        try {
-            $products = $this->_productCollection->create()
-                ->addAttributeToSelect(['url_key', 'sku', 'name', 'price', 'images'])
-                ->setStore($this->_storeManager->getStore());
+    public function products()
+    {
+        $products = $this->_productCollection->create()
+            ->addAttributeToSelect(['url_key', 'sku', 'name', 'price', 'images'])
+            ->setStore($this->_storeManager->getStore());
 
-            // Exclude product
-            if ($this->_httpRequest->getParam('exclude')) {
-                $products = $products->addAttributeToFilter('entity_id', ['neq' => $this->_httpRequest->getParam('exclude')]);
-            }
+        // Exclude product
+        if ($this->_httpRequest->getParam('exclude')) {
+            $products = $products->addAttributeToFilter('entity_id', ['neq' => $this->_httpRequest->getParam('exclude')]);
+        }
 
-            // Categories
-            if ($this->_httpRequest->getParam('category')) {
-                $products = $products->addCategoriesFilter(['in' => $this->_httpRequest->getParam('category')]);
-            }
+        // Categories
+        if ($this->_httpRequest->getParam('category')) {
+            $products = $products->addCategoriesFilter(['in' => $this->_httpRequest->getParam('category')]);
+        }
 
-            // Brands
-            if ($this->_httpRequest->getParam('brands')) {
-                $products = $products->addFieldToFilter('manufacturer', ['in' => $this->_httpRequest->getParam('brands')]);
-            }
+        // Brands
+        if ($this->_httpRequest->getParam('brands')) {
+            $products = $products->addFieldToFilter('manufacturer', ['in' => $this->_httpRequest->getParam('brands')]);
+        }
 
-            // Current page
-            if ($this->_httpRequest->getParam('page')) {
-                $products = $products->setCurPage($this->_httpRequest->getParam('page'));
-            }
+        // Current page
+        if ($this->_httpRequest->getParam('page')) {
+            $products = $products->setCurPage($this->_httpRequest->getParam('page'));
+        }
 
-            // Number of items per page
-            if ($this->_httpRequest->getParam('limit')) {
-                $products = $products->setPageSize($this->_httpRequest->getParam('limit'));
-            }
+        // Number of items per page
+        if ($this->_httpRequest->getParam('limit')) {
+            $products = $products->setPageSize($this->_httpRequest->getParam('limit'));
+        }
 
-            // Sort by an attribute
-            if ($this->_httpRequest->getParam('sortBy') && $this->_httpRequest->getParam('sortOrder')) {
-                $products->addAttributeToSort(
-                    strtoupper($this->_httpRequest->getParam('sortBy')),
-                    strtoupper($this->_httpRequest->getParam('sortOrder'))
-                );
-            }
-        } catch (Exception $e) {
-            throw $e;
+        // Sort by an attribute
+        if ($this->_httpRequest->getParam('sortBy') && $this->_httpRequest->getParam('sortOrder')) {
+            $products->addAttributeToSort(
+                strtoupper($this->_httpRequest->getParam('sortBy')),
+                strtoupper($this->_httpRequest->getParam('sortOrder'))
+            );
         }
 
         return $this->_mapProducts($products);
@@ -87,20 +84,18 @@ class Product implements ProductInterface
      * @param string $key
      * @return array
      */
-    public function product($key) {
-        try {
-            $products = $this->_productCollection->create()
-                ->addAttributeToSelect(['url_key', 'sku', 'name', 'description', 'price', 'images'])
-                ->addAttributeToFilter('url_key', $key)
-                ->setStore($this->_storeManager->getStore());
-        } catch (Exception $e) {
-            throw $e;
-        }
+    public function product($key)
+    {
+        $products = $this->_productCollection->create()
+            ->addAttributeToSelect(['url_key', 'sku', 'name', 'description', 'price', 'images'])
+            ->addAttributeToFilter('url_key', $key)
+            ->setStore($this->_storeManager->getStore());
 
         return $this->_mapProducts($products);
     }
 
-    private function _mapProducts($products) {
+    private function _mapProducts($products)
+    {
         $data = [];
 
         foreach ($products as $product) {
@@ -113,10 +108,15 @@ class Product implements ProductInterface
             }
 
             $categoriesData = [];
-            $categories = $this->_categoryCollection->create()
-                ->addAttributeToSelect(['url_key', 'name', 'level'])
-                ->addAttributeToFilter('entity_id', $product->getCategoryIds())
-                ->setStore($this->_storeManager->getStore());
+
+            try {
+                $categories = $this->_categoryCollection->create()
+                    ->addAttributeToSelect(['url_key', 'name', 'level'])
+                    ->addAttributeToFilter('entity_id', $product->getCategoryIds())
+                    ->setStore($this->_storeManager->getStore());
+            } catch (LocalizedException $e) {
+                return $e;
+            }
 
             foreach ($categories as $category) {
                 $categoriesData[] = [

@@ -6,35 +6,36 @@ use Magento\Catalog\Api\ProductRepositoryInterfaceFactory;
 
 class QuotePlugin
 {
-    protected $cartItemExtension;
-    protected $productRepository;
+    protected $_cartItemExtension;
+    protected $_productRepository;
 
     public function __construct(
         CartItemExtensionFactory $cartItemExtension,
         ProductRepositoryInterfaceFactory $productRepository
     ) {
-        $this->cartItemExtension = $cartItemExtension;
-        $this->productRepository = $productRepository;
+        $this->_cartItemExtension = $cartItemExtension;
+        $this->_productRepository = $productRepository;
     }
 
-    public function afterGet($subject, $quote) {
-        $quoteData = $this->setAttributeValue($quote);
-        return $quoteData;
+    public function afterGet($subject, $quote)
+    {
+        return $this->setAttributeValue($quote);
     }
 
-    public function afterGetActiveForCustomer($subject, $quote) {
-        $quoteData = $this->setAttributeValue($quote);
-        return $quoteData;
+    public function afterGetActiveForCustomer($subject, $quote)
+    {
+        return $this->setAttributeValue($quote);
     }
 
-    private function setAttributeValue($quote) {
+    private function setAttributeValue($quote)
+    {
         if ($quote->getItemsCount()) {
             foreach ($quote->getItems() as $item) {
                 $extensionAttributes = $item->getExtensionAttributes();
                 if ($extensionAttributes === null) {
-                    $extensionAttributes = $this->cartItemExtension->create();
+                    $extensionAttributes = $this->_cartItemExtension->create();
                 }
-                $productData = $this->productRepository->create()->get($item->getSku());
+                $productData = $this->_productRepository->create()->get($item->getSku());
                 $images = $productData->getMediaGalleryImages();
                 $imagesData = [];
                 foreach ($images as $image) {

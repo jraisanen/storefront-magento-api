@@ -2,8 +2,9 @@
 namespace Jraisanen\Storefront\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\UrlInterface;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\Webapi\Exception;
 use Jraisanen\Storefront\Api\ConfigInterface;
 
 class Config implements ConfigInterface
@@ -26,26 +27,23 @@ class Config implements ConfigInterface
      * @throws string
      * @return array
      */
-    public function configs() {
+    public function configs()
+    {
         $data = [];
 
-        try {
-            foreach ($this->_storeManager->getStores() as $store) {
-                $data[] = [
-                    'id' => (int)$store->getId(),
-                    'code' => $store->getCode(),
-                    'websiteId' => (int)$store->getWebsiteId(),
-                    'name' => $store->getName(),
-                    'locale' => $this->_scopeConfig->getValue('general/locale/code', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId()),
-                    'currencyCode' => $this->_scopeConfig->getValue('currency/options/default', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId()),
-                    'timezone' => $this->_scopeConfig->getValue('general/locale/timezone', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId()),
-                    'weightUnit' => $this->_scopeConfig->getValue('general/locale/weight_unit', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId()),
-                    'baseUrl' => $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB, true),
-                    'baseMediaUrl' => $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA, true),
-                ];
-            }
-        } catch (Exception $e) {
-            throw $e;
+        foreach ($this->_storeManager->getStores() as $store) {
+            $data[] = [
+                'id' => (int)$store->getId(),
+                'code' => $store->getCode(),
+                'websiteId' => (int)$store->getWebsiteId(),
+                'name' => $store->getName(),
+                'locale' => $this->_scopeConfig->getValue('general/locale/code', ScopeInterface::SCOPE_STORE, $store->getId()),
+                'currencyCode' => $this->_scopeConfig->getValue('currency/options/default', ScopeInterface::SCOPE_STORE, $store->getId()),
+                'timezone' => $this->_scopeConfig->getValue('general/locale/timezone', ScopeInterface::SCOPE_STORE, $store->getId()),
+                'weightUnit' => $this->_scopeConfig->getValue('general/locale/weight_unit', ScopeInterface::SCOPE_STORE, $store->getId()),
+                'baseUrl' => $store->getBaseUrl(UrlInterface::URL_TYPE_WEB, true),
+                'baseMediaUrl' => $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA, true),
+            ];
         }
 
         return $data;
