@@ -1,45 +1,51 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/sf/auth/logout" method="POST">
+        <service class="Jraisanen\Storefront\Api\AuthInterface" method="logout" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
     <route url="/V1/sf/brands" method="GET">
         <service class="Jraisanen\Storefront\Api\BrandInterface" method="brands" />
         <resources>
-            <resource ref="Jraisanen_Storefront::brands" />
+            <resource ref="anonymous" />
         </resources>
     </route>
     <route url="/V1/sf/categories" method="GET">
         <service class="Jraisanen\Storefront\Api\CategoryInterface" method="categories" />
         <resources>
-            <resource ref="Jraisanen_Storefront::categories" />
+            <resource ref="anonymous" />
         </resources>
     </route>
     <route url="/V1/sf/configs" method="GET">
         <service class="Jraisanen\Storefront\Api\ConfigInterface" method="configs" />
         <resources>
-            <resource ref="Jraisanen_Storefront::configs" />
+            <resource ref="anonymous" />
         </resources>
     </route>
     <route url="/V1/sf/products" method="GET">
         <service class="Jraisanen\Storefront\Api\ProductInterface" method="products" />
         <resources>
-            <resource ref="Jraisanen_Storefront::products" />
+            <resource ref="anonymous" />
         </resources>
     </route>
     <route url="/V1/sf/products/:key" method="GET">
         <service class="Jraisanen\Storefront\Api\ProductInterface" method="product" />
         <resources>
-            <resource ref="Jraisanen_Storefront::product" />
+            <resource ref="anonymous" />
         </resources>
     </route>
     <route url="/V1/sf/pages" method="GET">
         <service class="Jraisanen\Storefront\Api\PageInterface" method="pages" />
         <resources>
-            <resource ref="Jraisanen_Storefront::pages" />
+            <resource ref="anonymous" />
         </resources>
     </route>
     <route url="/V1/sf/pages/:key" method="GET">
         <service class="Jraisanen\Storefront\Api\PageInterface" method="page" />
         <resources>
-            <resource ref="Jraisanen_Storefront::page" />
+            <resource ref="anonymous" />
         </resources>
     </route>
 </routes>

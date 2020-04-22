@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Jraisanen\Storefront\Api\AuthInterface" type="Jraisanen\Storefront\Model\Auth" />
     <preference for="Jraisanen\Storefront\Api\BrandInterface" type="Jraisanen\Storefront\Model\Brand" />
     <preference for="Jraisanen\Storefront\Api\CategoryInterface" type="Jraisanen\Storefront\Model\Category" />
     <preference for="Jraisanen\Storefront\Api\ConfigInterface" type="Jraisanen\Storefront\Model\Config" />
