@@ -24,16 +24,16 @@
             <resource ref="anonymous" />
         </resources>
     </route>
-    <route url="/V1/sf/products" method="GET">
-        <service class="Jraisanen\Storefront\Api\ProductInterface" method="products" />
+    <route url="/V1/sf/orders" method="GET">
+        <service class="Jraisanen\Storefront\Api\OrderInterface" method="orders" />
         <resources>
-            <resource ref="anonymous" />
+            <resource ref="self" />
         </resources>
     </route>
-    <route url="/V1/sf/products/:key" method="GET">
-        <service class="Jraisanen\Storefront\Api\ProductInterface" method="product" />
+    <route url="/V1/sf/orders/:id" method="GET">
+        <service class="Jraisanen\Storefront\Api\OrderInterface" method="order" />
         <resources>
-            <resource ref="anonymous" />
+            <resource ref="self" />
         </resources>
     </route>
     <route url="/V1/sf/pages" method="GET">
@@ -44,6 +44,18 @@
     </route>
     <route url="/V1/sf/pages/:key" method="GET">
         <service class="Jraisanen\Storefront\Api\PageInterface" method="page" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/products" method="GET">
+        <service class="Jraisanen\Storefront\Api\ProductInterface" method="products" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/sf/products/:key" method="GET">
+        <service class="Jraisanen\Storefront\Api\ProductInterface" method="product" />
         <resources>
             <resource ref="anonymous" />
         </resources>

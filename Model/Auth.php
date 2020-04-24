@@ -31,8 +31,17 @@ class Auth implements AuthInterface
      */
     public function logout()
     {
+        return $this->_tokenService->revokeCustomerAccessToken($this->getCustomerId());
+    }
+
+    /**
+     * Get customer id by the authorization header
+     *
+     * @return int
+     */
+    public function getCustomerId()
+    {
         $accessToken = explode(' ', $this->_httpRequest->getHeader('Authorization'))[1];
-        $customerId = $this->_token->loadByToken($accessToken)->getCustomerId();
-        return $this->_tokenService->revokeCustomerAccessToken($customerId);
+        return $this->_token->loadByToken($accessToken)->getCustomerId();
     }
 }

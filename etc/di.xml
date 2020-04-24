@@ -4,6 +4,7 @@
     <preference for="Jraisanen\Storefront\Api\BrandInterface" type="Jraisanen\Storefront\Model\Brand" />
     <preference for="Jraisanen\Storefront\Api\CategoryInterface" type="Jraisanen\Storefront\Model\Category" />
     <preference for="Jraisanen\Storefront\Api\ConfigInterface" type="Jraisanen\Storefront\Model\Config" />
+    <preference for="Jraisanen\Storefront\Api\OrderInterface" type="Jraisanen\Storefront\Model\Order" />
     <preference for="Jraisanen\Storefront\Api\PageInterface" type="Jraisanen\Storefront\Model\Page" />
     <preference for="Jraisanen\Storefront\Api\ProductInterface" type="Jraisanen\Storefront\Model\Product" />
     <type name="Magento\Quote\Api\CartRepositoryInterface">
