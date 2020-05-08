@@ -1,1 +1,1 @@
-# Storefront Magento
+# Storefront Magento API
